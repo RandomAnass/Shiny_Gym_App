@@ -1,0 +1,111 @@
+---
+title: "Custom Calendar"
+output:
+  html_document:
+    df_print: paged
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+  html_notebook: default
+---
+
+```{r}
+library(shiny)
+library(flexdashboard)
+#library(shinyjs)
+
+calendarPage <- function(data) {
+  
+  # Create the calendar tab
+  ui <- fluidPage(
+    fluidRow(
+      column(width = 12,
+             tags$head(
+               tags$style(HTML(".day-cell {
+                                 height: 100px;
+                                 width: 100px;
+                                 display: inline-block;
+                                 text-align: center;
+                                 vertical-align: middle;
+                                 font-weight: bold;
+                                 border: 1px solid gray;
+                                 padding: 10px;
+                                 margin: 5px;
+                                 cursor: pointer;
+                               }
+                               .selected {
+                                 background-color: lightgray;
+                               }"))
+             ),
+             uiOutput("calendar"))
+    )
+  )
+  
+  # Create the server logic to generate the calendar
+  server <- function(input, output, session) {
+    selected_date <- reactiveVal()
+    
+    output$calendar <- renderUI({
+      dates <- as.Date(colnames(data))
+      days_list <- lapply(dates, function(day) {
+        day_str <- format(day, "%d")
+        if (is.null(selected_date()) || selected_date() != day) {
+          actionButton(day_str, day_str,
+                       class = "day-cell",
+                       style = paste0("background-color:", data[1, day]),
+                       onclick = paste0("shinyjs.set_selected_date(", as.numeric(day), ")"))
+        } else {
+          actionButton(day_str, day_str,
+                       class = "day-cell selected",
+                       onclick = NULL)
+        }
+      })
+      do.call(tagList, days_list)
+    })
+    
+    observeEvent(input$day, {
+      selected_date(as.Date(input$day))
+    })
+    
+    shinyjs::useShinyjs()
+    shinyjs::jsCode("
+      shinyjs.set_selected_date = function(date) {
+        Shiny.setInputValue('day', date, {priority: 'event'});
+      }
+    ")
+  }
+  
+  # Return the shiny app object
+  shinyApp(ui, server)
+}
+
+
+# Function to create a calendar
+create_calendar <- function(year, month) {
+  calendarPage(
+    year,
+    month,
+    dayClick = "window.location.href = '#day-' + year + '-' + month + '-' + day;"
+  )
+}
+
+# UI for calendar
+ui <- fluidPage(
+  titlePanel("Custom Calendar"),
+  create_calendar(input$year, input$month)
+)
+
+# Server function to get stats for each day
+server <- function(input, output) {
+  output$day_stats <- renderTable({
+    date <- as.Date(paste(input$year, input$month, input$day, sep = "-"))
+    data.frame(Date = date,
+               Stats = sample(1:100, 1))
+  })
+}
+
+# Combine UI and server functions into a shiny app
+shinyApp(ui = ui, server = server)
+
+```
+

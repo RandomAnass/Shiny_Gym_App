@@ -1,0 +1,26 @@
+Based on the description you provided, it seems like your Shiny app will have the following tabs:
+
+    Calendar: A dynamic calendar plot that displays the color of each day based on whether the user trained or not. The user can zoom in to view a week and then zoom in again to view the activities for a specific day.
+
+    Progress: An interactive graph that shows the user's progress over time. This could be represented in various ways such as a line plot of total volume per day or a bar plot of max weight lifted for each exercise.
+
+    Add Activity: A tab where the user can add a new activity by selecting from a list of exercises, inputting the weight lifted, sets, reps, and choosing an image to represent the activity. The user can also mark the day as a rest day.
+
+    View Activities: A tab where the user can view the activities they have added for a specific day, including the activity name, weight, sets, reps, volume, and image.
+
+Overall, it seems like you have a solid plan for building this app, including the use of helpers files to organize your code. If you have any additional questions or need further assistance, feel free to ask!
+
+
+
+
+1.What is the data source for the dashboard? There are two sources of data: the data given by the user (age, sex, weight) and the data from https://strengthlevel.com about each activity. For example for Lat Pulldown based on the age given by the user and the type Strength Level also given by the user we get the  Weight to lift from https://strengthlevel.com/strength-standards/lat-pulldown/kg and we also get the image of the activity which will be used as a background of the card of the activity, for example here: https://static.strengthlevel.com/images/illustrations/lat-pulldown-1000x1000.jpg . And there is also other data like the total volume of training of the day, and calendar data, this data should be calculated inside the app.
+    2. What type of graph do you want to use for the calendar plot? I am not sure yet, the idea is we have a global calendar (for the current month for example) and on it we have the days colored (trained on the day, rested on the day and upcoming day) if you touch a day (which will act like a button, you should be able to see the date of that day, the total number of activities and the total volume of training , then you should be able to zoom by clicking a button to get a new widget with more details, we you get a week or a single day and the cards for each activity of that day.
+   3. What kind of interaction do you want for the calendar plot? It should be interactive, if you pass on it you get info and if you click you zoom in to get more details. I will let you chose the best way to do it.
+   4. Do you have any specific design requirements for the dashboard, such as color palette or font choice? No specific requirements.
+    5. How do you want to represent the information for each day in the calendar plot? by colors, one color for rest day, and grey for upcoming days and a gradient for training days with the gradient depending on the training volume.
+    6. Do you have any specific data processing or data transformation requirements for the dashboard? if the entred value of reps or weight is an outlier it shouldnt be counted, for example 1000 kg of lifting (we will keep it simple for now). But for the progress graphs of highcharter we should calculate average and try to find correlations between activities and progress, and it should also be shown in highcharter.
+    7.How do you want to handle user inputs for the dashboard? User input should be fun, either inputs by text, but also moving bars, picking form lists etc, I let you chose for each information a suitable input.
+    8.Do you want to add any additional widgets or tabs to the dashboard? If so, what kind of information do you want to display in them? Other than the main calendar dashboard and the tab of graphs we should have an other tab for links like sharing the calendar of training or the progress graphs or even downloading it.
+
+
+
