@@ -1,14 +1,49 @@
-# Load libraries
 library(rvest)
 library(tidyverse)
 library(stringr)
 library(janitor)
+library(RSelenium)
+
 
 # Define the URL of the main page
-url <- "https://strengthlevel.com/strength-standards"
+rD <- rsDriver(port = sample(7600)[1], browser = c("firefox"), chromever = NULL)
+remDr <- rD[["client"]]
+remDr$navigate("https://strengthlevel.com/strength-standards")
 
-# Read the HTML content of the main page
-html_content <- read_html(url)
+remDr$maxWindowSize()
+
+# Check if the button is disabled
+checkButton <- function() {
+  webElem1 <- remDr$findElement('xpath', "/html/body/section/div/div[6]/section[2]/div[2]/button")
+  attr <- tryCatch(webElem1$getElementAttribute("disabled"), error = function(e) "")
+  if (attr == "" || length(attr)==0) {
+    return(FALSE)
+  } else {
+    return(TRUE)
+  }
+}
+
+
+# Click the Load More button
+while (!checkButton()) {
+
+  webElem1 <- remDr$findElement('xpath', "/html/body/section/div/div[6]/section[2]/div[2]/button")
+  remDr$executeScript("arguments[0].scrollIntoView(true);", list(webElem1))
+  Sys.sleep(1)
+  webElem1$clickElement()
+  Sys.sleep(1)
+  
+}
+
+
+html_content <- remDr$getPageSource()[[1]]
+html_content <- read_html(html_content)
+
+
+# url <- "https://strengthlevel.com/strength-standards"
+# 
+# # Read the HTML content of the main page
+# html_content <- read_html(url)
 
 # Extract the URLs of the exercise pages
 exercise_icons <- html_content %>%
@@ -43,7 +78,7 @@ strength_total  <- NULL
 error_causing_urls <- c()
 # Loop over the exercise URLs
 for ( exercise_url in exercise_data$exercise_urls) {
-  
+  Sys.sleep(0.25)
   tryCatch(
     {
       exercise_name <- sub(".*standards/", "", exercise_url)  
@@ -123,10 +158,20 @@ for ( exercise_url in exercise_data$exercise_urls) {
 
 }
 
+remDr$close()
+remDr$quit()
+
 definition_of_levels <- tables[[11]]
-strength_total
-sets_and_reps_total
-levels_by_body_total
-levels_by_age_total
+
+# definition_of_levels
+# error_causing_urls
+# strength_total
+# sets_and_reps_total
+# levels_by_body_total
+# levels_by_age_total
 
 
+saveRDS(list = c("definition_of_levels", "error_causing_urls","strength_total", "sets_and_reps_total","levels_by_body_total", "levels_by_age_total"), file = "harvested_data.rds")
+# Restore the object
+#readRDS(file = "harvested_data.rds")
+print(error_causing_urls)
