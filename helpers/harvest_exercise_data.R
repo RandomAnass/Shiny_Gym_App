@@ -171,7 +171,8 @@ definition_of_levels <- tables[[11]]
 # levels_by_age_total
 
 
-saveRDS(list = c("definition_of_levels", "error_causing_urls","strength_total", "sets_and_reps_total","levels_by_body_total", "levels_by_age_total"), file = "harvested_data.rds")
+saveRDS(list("definition_of_levels", "error_causing_urls","strength_total", "sets_and_reps_total","levels_by_body_total", "levels_by_age_total"), file = "harvested_data.rds")
 # Restore the object
 #readRDS(file = "harvested_data.rds")
 print(error_causing_urls)
+# correct this vector
