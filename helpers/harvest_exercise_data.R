@@ -362,7 +362,6 @@ harvested_data <- function(save = F) {
   
   if(save){
     saveRDS( data_list, file = "harvested_data.rds")
-    
   }
   
   return(data_list)
