@@ -1,11 +1,17 @@
 # Simulation Data:
+library(tidyverse)
 
-data_list <- #data_list
+data_list <- readRDS("data/harvested_data.rds")
+
 
   # Load the data
   strength_total <- data_list$strength_total
   levels_by_body_total <- data_list$levels_by_body_total
   levels_by_age_total <- data_list$levels_by_age_total
+  sets_and_reps_total <- data_list$sets_and_reps_total
+  strength_total <- data_list$strength_total
+  definition_of_levels <- data_list$definition_of_levels
+    
 # Create a function to get the strength level based on weight and bodyweight ratio
 get_strength_level <- function(exercise_name, sex, weight=NA, age=NA) {
   
@@ -112,9 +118,10 @@ generate_user_dataframe <- function(user_code = "test", age, sex, weight) {
   return(training_data)
 }
 
-# Test
+# Test - example 
 test_data <- generate_user_dataframe(user_code = "test", 25, "male", 190)  
 
 test_data <- test_data %>% rowwise() %>%  mutate(day_volume = sum(exercise_1_volume, exercise_2_volume, exercise_3_volume,exercise_4_volume,exercise_5_volume,exercise_6_volume,exercise_7_volume, na.rm = TRUE))
 
 view(test_data)
+saveRDS( test_data, file = "data/generated_test_25_male_190.rds")
