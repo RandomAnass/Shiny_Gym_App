@@ -1,14 +1,47 @@
 library(highcharter)
-# to change, add dplyr, make it in functions
+library(tidyverse)
+source("helpers/pivot_user_data.R")
 
-pivoted_data
-data_plot <- pivoted_data %>% filter(exercise_name %in% names(sort(table(pivoted_data$exercise_name),decreasing=TRUE)[1:20]))
-hc <- hchart(
-  data_plot, "line", 
-  hcaes(x = date, y = exercise_volume, group = exercise_name)
-) %>%   hc_exporting(
-  enabled = TRUE, # always enabled
-  filename = "progress_graphs"
-)
+test_data <- readRDS("data/generated_test_25_male_190.rds")
+pivoted_data <- pivot_user_data(test_data)
 
-hc
+
+
+plot_prgress <- function(plot_data = pivoted_data,exercise_type="exercise_volume", curvature ="line" ) {
+  # exercise_type = exercise_volume ,exercise_weight
+  # curve = line, spline, scatter, stock
+  n <- 20
+  plot_data_top_n <- pivoted_data %>% filter(exercise_name %in% names(sort(table(pivoted_data$exercise_name),decreasing=TRUE)[1:n]))
+  # TO DO: decide when to use plot_data_top_n vs plot_data
+  # TO DO: 
+  
+
+    hc <- hchart(
+      plot_data, type =  curvature ,
+      hcaes(x = date, y = !!exercise_type, group = exercise_name,
+            enableMouseTracking = FALSE,
+            showInLegend = FALSE)  
+    ) %>%   hc_exporting(
+      enabled = TRUE, # always enabled
+      filename = "progress_graphs"
+    )
+  
+    
+    
+      #hc
+  
+  
+  
+  return(hc)
+}
+
+
+
+# Other graphs
+# To DO: explore other possibilities 
+
+textcld <- as.data.frame(table(plot_data$exercise_name))
+names(textcld) <- c( "word", "n")
+
+hchart(textcld, "wordcloud", hcaes(name = word, weight = log(n)))
+hchart(textcld, "wordcloud", hcaes(name = word, weight = n))

@@ -1,3 +1,4 @@
+# TO DO: Finish style/design and make general functions:
 # year simulation
 
 library(tidyverse)
