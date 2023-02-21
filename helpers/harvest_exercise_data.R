@@ -180,14 +180,14 @@ definition_of_levels <- tables[[9]]
 # levels_by_age_total
 
 
-saveRDS(list(definition_of_levels = definition_of_levels, error_causing_urls = error_causing_urls,strength_total = strength_total, sets_and_reps_total = sets_and_reps_total,levels_by_body_total = levels_by_body_total, levels_by_age_total = levels_by_age_total) , file = "harvested_data.rds")
+saveRDS(list(definition_of_levels = definition_of_levels, error_causing_urls = error_causing_urls,strength_total = strength_total, sets_and_reps_total = sets_and_reps_total,levels_by_body_total = levels_by_body_total, levels_by_age_total = levels_by_age_total) , file = "data/harvested_data_lb.rds")
 # Restore the object
 #list_data <- readRDS(file = "harvested_data.rds")
 
 
 # Making the extraction as a function:
 
-harvested_data <- function(save = F) {
+harvested_data <- function(save = F) { # uses kg
 
   
   # Define the URL of the main page
@@ -279,7 +279,7 @@ harvested_data <- function(save = F) {
         
         #https://strengthlevel.com/strength-standards/bench-press
         # Read the HTML content of the exercise page
-        tables <- read_html(paste0("https://strengthlevel.com", exercise_url))  %>%  
+        tables <- read_html(paste0("https://strengthlevel.com", exercise_url, "/kg"))  %>%  
           html_table(fill = TRUE) 
         # exercise_images <- append(x, -)
         # read_html(paste0("https://strengthlevel.com", exercise_url))  %>%
@@ -361,12 +361,12 @@ harvested_data <- function(save = F) {
   data_list <- list(definition_of_levels = definition_of_levels, error_causing_urls = error_causing_urls,strength_total = strength_total, sets_and_reps_total = sets_and_reps_total,levels_by_body_total = levels_by_body_total, levels_by_age_total = levels_by_age_total)
   
   if(save){
-    saveRDS( data_list, file = "harvested_data.rds")
+    saveRDS( data_list, file = "data/harvested_data.rds")
   }
   
   return(data_list)
-
-
-  
   
 }
+
+# test - changing data to kg
+harvested_data(save = T)
