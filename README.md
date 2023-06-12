@@ -11,12 +11,22 @@
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/RandomAnass/Shiny_App)
 
+## Current App:
 
-![Year Volume](/tmp/volume_year.png)
-![Year Volume 2](/tmp/plot_year.png)
-![Progression](/tmp/exo_progress.png)
-![Full progress](/tmp/progress_graphs.png)
-![Exercises of the day](/tmp/day_waterfall.png)
+![Screenshot 1](tmp/1.png)
+![Screenshot 2](tmp/2.png)
+![Screenshot 3](tmp/3.png)
+![Screenshot 4](tmp/4.png)
+![Screenshot 5](tmp/5.png)
+![Screenshot 6](tmp/6.png)
+
+
+## Initial Screen shots
+![Year Volume](tmp/volume_year.png)
+![Year Volume 2](tmp/plot_year.png)
+![Progression](tmp/exo_progress.png)
+![Full progress](tmp/progress_graphs.png)
+![Exercises of the day](tmp/day_waterfall.png)
 
 
 ## Description
