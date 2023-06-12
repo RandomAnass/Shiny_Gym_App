@@ -36,12 +36,23 @@ plot_prgress <- function(plot_data = pivoted_data,exercise_type="exercise_volume
 }
 
 
+plot_waterfall <- function(filtered_data) {
+  highchart() %>%
+    hc_chart(type = "waterfall") %>%
+    hc_xAxis(categories = filtered_data$exercise_name) %>%
+    hc_add_series(
+      name = "Exercise Volume",
+      data = filtered_data$exercise_volume,
+      colorByPoint = TRUE
+    )
+}
+
 
 # Other graphs
 # To DO: explore other possibilities 
+#plot_data <- plot_prgress(plot_data = pivoted_data,exercise_type="exercise_volume", curvature ="line" ) 
+#textcld <- as.data.frame(table(plot_data$exercise_name))
+#names(textcld) <- c( "word", "n")
 
-textcld <- as.data.frame(table(plot_data$exercise_name))
-names(textcld) <- c( "word", "n")
-
-hchart(textcld, "wordcloud", hcaes(name = word, weight = log(n)))
-hchart(textcld, "wordcloud", hcaes(name = word, weight = n))
+#hchart(textcld, "wordcloud", hcaes(name = word, weight = log(n)))
+#hchart(textcld, "wordcloud", hcaes(name = word, weight = n))

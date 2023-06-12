@@ -78,7 +78,8 @@ exercise_urls <- html_content %>%
   html_attr("href") 
 
 exercise_data <- data.frame(exercise_names, exercise_urls, exercise_icons, exercise_images)
-
+#head(exercise_data)
+saveRDS( exercise_data, file = "data/exercise_data.rds")
 # Initialize an empty tables to store the data
 levels_by_body_total <- NULL
 levels_by_age_total  <- NULL
