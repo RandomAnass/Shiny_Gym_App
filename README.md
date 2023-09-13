@@ -8,12 +8,11 @@ This is a Shiny web application to track workouts, visualize progress, and plan 
 
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 
-![GitHub commit activity](https://img.shields.io/github/commit-activity/y/RandomAnass/Shiny_App)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/y/RandomAnass/Shiny_Gym_App)
 
+![GitHub last commit](https://img.shields.io/github/last-commit/RandomAnass/Shiny_Gym_App)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/RandomAnass/Shiny_App)
-
-![GitHub repo size](https://img.shields.io/github/repo-size/RandomAnass/Shiny_App)
+![GitHub repo size](https://img.shields.io/github/repo-size/RandomAnass/Shiny_Gym_App)
 
 ## Current App:
 
