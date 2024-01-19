@@ -20,7 +20,7 @@ dfPlot <- dfPlot %>%
   mutate(monthweek = 1 + week - min(week))
 
 ggplot(dfPlot, aes(weekday,-week, fill = day_volume)) +
-  geom_tile(colour = "white")  + 
+  geom_tile(colour = "#ecf0f5")  + 
   geom_text(aes(label = day(date)), size = 3) +
   theme(aspect.ratio = 1/2,
         axis.title.x = element_blank(),
@@ -31,11 +31,11 @@ ggplot(dfPlot, aes(weekday,-week, fill = day_volume)) +
         panel.background = element_blank(),
         strip.background = element_blank(),
         strip.text = element_text(face = "bold", size = 15),
-        panel.border = element_rect(colour = "black", fill=NA, size=1)) +
+        panel.border = element_rect(colour = "black", fill=NA, size=1),
+        plot.background = element_rect(fill = "#ecf0f5")) +
   scale_fill_gradient2(midpoint = 0.5) +
   facet_wrap(~month, nrow = 4, ncol = 3, scales = "free") +
-  labs(title = "Calendar heatmap 2022")
-
+  labs(title = "Calendar heatmap 2022") 
 }
 
 plot_yearly_calendar_ <- function(data) {
@@ -57,7 +57,8 @@ plot_yearly_calendar_ <- function(data) {
     special.days = scale_data(data2$day_volume),
     gradient = TRUE,
     special.col = rgb(0, 0, 1, alpha = 1),
-    low.col = "white"
+    bg.col = "#ecf0f5",
+    text.size = 4
   )
 }
 
@@ -75,16 +76,16 @@ plot_monthly_calendar <- function(data, month_) {
                             month == "January" & week %in% 52:53 ~ 0,
                             TRUE ~ week))
   
-  print(month_)
+
   month_data <- data3 %>% filter(month == month_)
   print(length(month_data$day_volume))
   calendR(
     year = 22,
-    month = 1,
+    month =  which(month.name == month_),
     special.days = scale_data_month(month_data$day_volume),
     gradient = TRUE,
     special.col = rgb(0, 1, 0, alpha = 1),
-    low.col = "white"
+    bg.col = "#ecf0f5"
   )
 }
 
